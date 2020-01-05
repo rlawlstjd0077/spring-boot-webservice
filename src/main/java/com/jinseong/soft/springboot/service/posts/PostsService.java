@@ -2,6 +2,7 @@ package com.jinseong.soft.springboot.service.posts;
 
 import com.jinseong.soft.springboot.domain.posts.Posts;
 import com.jinseong.soft.springboot.domain.posts.PostsRepository;
+import com.jinseong.soft.springboot.web.dto.PostsListResponseDto;
 import com.jinseong.soft.springboot.web.dto.PostsResponseDto;
 import com.jinseong.soft.springboot.web.dto.PostsSaveRequestDto;
 import com.jinseong.soft.springboot.web.dto.PostsUpdateRequestDto;
@@ -38,6 +39,23 @@ public class PostsService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
 
         return new PostsResponseDto(entity);
+    }
+
+    //트랜잭션의 범위는 유지하되 조회기능만 남겨두어 조회속도가 개선됨
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDesc() {
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Posts posts = postsRepository.findById(id)
+                .orElseThrow(() -> new
+                        IllegalArgumentException("해당 사용자가 없습니다 id = " + id));
+
+        postsRepository.delete(posts);
     }
 
 
