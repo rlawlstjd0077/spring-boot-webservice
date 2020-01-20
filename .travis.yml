@@ -19,3 +19,21 @@ notifications:
   email:
     recipients:
       - rlawlstjd077@gmail.com
+
+# deploy 명령이 실행되기 전에 실행
+# CodeDeploy는 Jar파일을 인식하지 못하므로 Jar+ 기타 설정 파일들을 모아 압축함
+before_deploy:
+  - zip -r freelec-springboot2-webservice *
+  - mkdir -p deploy
+  - mv freelec-springboot2-webservice.zip deploy/freelec-springboot2-webservice.zip
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
+    secret_access_key: $AWS_SECRET_KEY # Travis repo settings에 설정된 값
+    bucket: freelec-springboot-bucket
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private # zip 파일 접근을 private 으로
+    local_dir: deploy # before_deploy에서 생성한 디렉토리
+    wait-until-deployed: true
