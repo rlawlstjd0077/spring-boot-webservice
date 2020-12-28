@@ -1,4 +1,4 @@
-# Spring Boot WebService
+# Spring Boot WebService [![Build Status](https://travis-ci.org/rlawlstjd0077/spring-boot-webservice.svg?branch=master)](https://travis-ci.org/rlawlstjd0077/spring-boot-webservice)
 ## 1. 프로젝트 소개
 - Spring Boot, AWS 를 이용해 만든 간단한 게시판 웹 서비스 입니다.
 - "스프링 부트와 AWS로 혼자 구현하는 웹 서비스" 서적을 참고하여 Spring Boot를 학습함과 동시에 Starter 프로젝트의 목적으로 게시판을 개발해보고자 하였습니다.
